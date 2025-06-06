@@ -1,76 +1,95 @@
 # SP25 Taxi Demand Forecasting - MLOps Project
 
+An end-to-end MLOps pipeline for real-time NYC taxi demand forecasting. The project combines historical trip data, automated feature pipelines, robust model training, and live dashboards to enable accurate and maintainable predictions.
+
+---
+
 ## Overview
-An end-to-end MLOps solution for predicting NYC taxi demand in real-time using historical data, automated pipelines, and live visualizations. Combines batch processing with upcoming streaming integration for operational efficiency and model monitoring.
+
+This project predicts hourly taxi demand for NYC using the 2023 Yellow Taxi Trip dataset. It is designed with production-level MLOps best practices, supporting automated training, model tracking, and visualization. A future extension will add real-time streaming capabilities.
+
+---
 
 ## Architecture
 
-### Part 1: Static Data Pipeline (Model Development)
-- **Data Source:** NYC Yellow Taxi Trip Data (2023)
-- **Core Components:**
-  - Data ingestion and validation
-  - Hourly time series aggregation
-  - Feature engineering with sliding windows
-  - Model training (XGBoost/LightGBM) with MLflow tracking
-  - Hyperparameter optimization
+### 1. Static Data Pipeline (Model Development)
 
-### Part 2: Automated Batch Pipeline
-- **MLOps Infrastructure:**
-  - Hopsworks (Feature Store + Model Registry)
-  - GitHub Actions (hourly scheduling)
-  - Prediction storage and monitoring
-- **Key Metrics:**
-  - Hourly MAE calculation
-  - Prediction performance history
+Data Source: NYC Yellow Taxi Trip Data (2023)
 
-### Part 3: Real-Time Visualization
-- **Streamlit Dashboards:**
-  - Public: Interactive NYC taxi zone map with predictions
-  - Internal: MAE tracking and model performance
-- **Visualization Tools:**
-  - Plotly for trends
-  - Folium for geospatial data
+Components:
+- Data ingestion and schema validation
+- Hourly-level time series aggregation
+- Feature engineering:
+  - Sliding window features (lag, rolling mean)
+  - Temporal features (hour, weekday, holidays)
+- Model training:
+  - Models: XGBoost, LightGBM
+  - MLflow for experiment tracking
+- Hyperparameter tuning using Optuna
+
+---
+
+### 2. Automated Batch Pipeline
+
+MLOps Infrastructure:
+- Hopsworks for Feature Store and Model Registry
+- GitHub Actions for scheduled retraining and inference (hourly)
+- Prediction storage and monitoring via Feature Store
+
+Key Metrics:
+- Hourly Mean Absolute Error (MAE)
+- Historical prediction performance tracking
+
+---
+
+### 3. Real-Time Visualization
+
+Streamlit Dashboards:
+- Public Dashboard:
+  - Interactive NYC taxi zone map with hourly demand predictions
+- Internal Dashboard:
+  - Model performance (MAE over time)
+  - Feature and prediction distributions
+
+Visualization Tools:
+- Plotly for trend plots and time series
+- Folium for geospatial mapping of NYC zones
+
+---
 
 ## Tech Stack
-- **Core:** Python 3.9+
-- **ML:** XGBoost, LightGBM, Scikit-learn
-- **Data:** Pandas, NumPy, GeoPandas
-- **MLOps:** Hopsworks, MLflow, GitHub Actions
-- **Viz:** Streamlit, Plotly, Folium
 
-## Project Structure
+Core:
+- Python 3.9+
 
-## Quick Start
-1. **Environment Setup:**
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+Machine Learning:
+- XGBoost, LightGBM, Scikit-learn
+- Optuna (for hyperparameter optimization)
+- MLflow (for experiment tracking)
 
-2. **Configure Secrets (.env):**
-HOPSWORKS_API_KEY=your_api_key
-MLFLOW_TRACKING_URI=your_mlflow_uri
+Data Processing:
+- Pandas, NumPy, GeoPandas
+- PyArrow, Great Expectations (for data validation)
 
-3. **Run Pipelines:**
-Feature pipeline
-python src/feature_pipeline.py
+MLOps:
+- Hopsworks (Feature Store + Model Registry)
+- GitHub Actions (CI/CD automation)
+- Docker (containerization)
 
-Model training
-python src/model_training_pipeline.py
+Visualization:
+- Streamlit, Plotly, Folium
 
-Inference
-python src/inference_pipeline.py
+---
 
+## Future Work
 
-4. **Launch Dashboards:**
-streamlit run streamlit/frontend_v2.py
-streamlit run streamlit/frontend_monitor.py
+- Integration of Kafka and Spark for real-time streaming pipeline
+- Dynamic model drift detection and retraining triggers
+- Enhanced monitoring with Grafana and Prometheus
 
-
-## Roadmap
-- **Part 4 (Upcoming):**
-  - AWS Kinesis integration for streaming data
-  - Real-time prediction updates
-  - Cloud-native deployment
+---
 
 ## License
-MIT License © 2024 Vasu Krishna
+MIT License © 2025 Tarun Kumar Reddy Nallagari
+
+
